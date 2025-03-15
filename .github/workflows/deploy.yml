@@ -67,8 +67,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@159.89.44.197 << 'EOF'
             # Ensure the target directory exists
             
-            # mkdir -p /code
-            
             # Move images from /tmp to /code
             mv /root/tmp/ready_to_connect-app.tar.bz2 /root/code/
             mv /root/tmp/postgres.tar.bz2 /root/code/
