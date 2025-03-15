@@ -25,6 +25,10 @@ Install the project dependencies using:
 mvn install
 ```
 
+```bash
+mvn -N io.takari:maven:wrapper
+```
+
 ## 3. Build Docker Images
 
 Build the Docker images using Docker Compose:
