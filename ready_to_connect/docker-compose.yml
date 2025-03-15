@@ -27,6 +27,20 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: mysecurepassword
+    
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   restart: always
+  #   ports:
+  #     - "443:443"  # Expose HTTPS port
+  #     - "80:80"    # Expose HTTP port for redirection
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf  # Mount the Nginx configuration
+  #     - ./nginx.crt:/etc/nginx/ssl/nginx.crt  # Mount the SSL certificate
+  #     - ./nginx.key:/etc/nginx/ssl/nginx.key  # Mount the SSL private key
+  #   depends_on:
+  #     - app  # Ensure Nginx starts after the Spring Boot app
 
 volumes:
   postgres_data:
