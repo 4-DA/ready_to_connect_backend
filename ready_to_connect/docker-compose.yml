@@ -1,0 +1,32 @@
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres-db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecurepassword
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: spring-app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: mysecurepassword
+
+volumes:
+  postgres_data:
