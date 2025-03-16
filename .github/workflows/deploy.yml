@@ -40,7 +40,7 @@ jobs:
       # Step 6: Save Docker images as tarballs
       - name: Save Docker images as tarballs
         run: |
-          docker save ready_to_connect_backend-backend:latest | bzip2 > backend.tar.bz2
+          docker save ready_to_connect_backend-backend:latest | bzip2 > ready_to_connect_backend-backend.tar.bz2
           docker save postgres:17 | bzip2 > postgres.tar.bz2
           ls -al  # Verify tarballs are created
 
@@ -55,10 +55,10 @@ jobs:
       - name: Load Docker images on DigitalOcean Droplet
         run: |
           ssh -o StrictHostKeyChecking=no root@159.89.44.197 << 'EOF'
-            mv /root/tmp/backend.tar.bz2 /root/code/
+            mv /root/tmp/ready_to_connect_backend-backend.tar.bz2 /root/code/
             mv /root/tmp/postgres.tar.bz2 /root/code/
             mv /root/tmp/docker-compose-deploy.yml /root/code/docker-compose.yml
-            docker load < /root/code/backend.tar.bz2
+            docker load < /root/code/ready_to_connect_backend-backend.tar.bz2
             docker load < /root/code/postgres.tar.bz2
           EOF
 
