@@ -49,7 +49,6 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no backend.tar.bz2 root@159.89.44.197:/root/tmp/
           scp -o StrictHostKeyChecking=no postgres.tar.bz2 root@159.89.44.197:/root/tmp/
-          cd ready_to_connect
           scp -o StrictHostKeyChecking=no docker-compose-deploy.yml root@159.89.44.197:/root/tmp/
 
       # Step 8: Load Docker images on DigitalOcean Droplet
