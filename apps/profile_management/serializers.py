@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Mentor, Student, Guardian, Business
+from .models import Mentor, Student, Guardian, Business, Skill, Notification, Internship
 from apps.accounts.serializers import CustomUserReadSerializer
 
 
@@ -46,3 +46,38 @@ class BusinessSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Include all fields of the Business model
         # The 'user' field is usually the logged-in user and shouldn't be editable
         read_only_fields = ['user']
+
+
+class SkillSerializer(serializers.ModelSerializer):
+    # Serialize the related CustomUser (user)
+    user = CustomUserReadSerializer()
+
+    class Meta:
+        model = Skill
+        fields = '__all__'  # Include all fields of the Skill model
+        # The 'user' field should generally be read-only
+        read_only_fields = ['user']
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    # Serialize the related CustomUser (user)
+    user = CustomUserReadSerializer()
+
+    class Meta:
+        model = Notification
+        fields = '__all__'  # Include all fields of the Skill model
+        # The 'user' field should generally be read-only
+        read_only_fields = ['user']
+
+
+class InternshipSerializer(serializers.ModelSerializer):
+    # Serialize the related CustomUser (user)
+    user = CustomUserReadSerializer()
+    business = BusinessSerializer()
+    applicants = CustomUserReadSerializer()
+
+    class Meta:
+        model = Notification
+        fields = '__all__'  # Include all fields of the Skill model
+        # The 'user' field should generally be read-only
+        read_only_fields = ['user', 'business', 'applicants']

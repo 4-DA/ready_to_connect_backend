@@ -16,11 +16,14 @@ class CustomUserRegistrationSerializer(RegisterSerializer, serializers.ModelSeri
     user_type = serializers.ChoiceField(choices=USER_TYPES, required=True)
     location = serializers.CharField(required=True)
     profile_picture = serializers.ImageField(required=True)
+    streak = serializers.IntegerField(required=False, default=0)
+    level = streak = serializers.IntegerField(required=False, default=0)
+    xp = streak = serializers.IntegerField(required=False, default=0)
 
     class Meta:
         model = CustomUser
         fields = ('email', 'password1', 'password2',
-                  'full_name', 'date_of_birth', 'user_type', 'location', 'profile_picture')
+                  'full_name', 'date_of_birth', 'user_type', 'location', 'profile_picture', 'streak', 'level', 'xp')
 
     def validate_date_of_birth(self, value):
         """ Ensure date of birth is not in the future. """
@@ -36,6 +39,11 @@ class CustomUserRegistrationSerializer(RegisterSerializer, serializers.ModelSeri
         user.location = self.validated_data.get("location")
         user.profile_picture = self.validated_data.get("profile_picture")
         user.user_type = self.validated_data.get("user_type")
+        user.level = self.validated_data.get("level")
+        user.xp = self.validated_data.get("xp")
+        user.streak = self.validated_data.get("streak")
+        user.career_path = self.validated_data.get("career_path")
+        user.badge = self.validated_data.get("badge")
 
         user.save()
 
@@ -46,7 +54,7 @@ class CustomUserReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['pk', 'email', 'full_name', 'date_of_birth', 'created_on',
-                  'location', 'profile_picture', 'user_type'
+                  'location', 'profile_picture', 'user_type', 'streak', 'level', 'xp', 'career_path', 'badge'
                   ]
 
 

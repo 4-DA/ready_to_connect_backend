@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.db import models
 from apps.accounts.models import CustomUser
 from django.contrib.postgres.fields import ArrayField
@@ -91,71 +92,72 @@ class Business(models.Model):
     )
 
 
-# class Skill(models.Model):
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     name = models.CharField(max_length=255, null=False, blank=False)
-#     category = models.CharField(max_length=255, null=True, blank=True)
-#     description = models.TextField(null=True, blank=True)
-#     level = models.IntegerField(null=False, blank=False)  # 1-5
-#     points = models.IntegerField(null=True, blank=True)
-#     last_assessed = models.DateTimeField(null=True, blank=True)
+class Skill(models.Model):
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='skills')
+    name = models.CharField(max_length=255, null=False, blank=False)
+    category = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    level = models.IntegerField(null=False, blank=False)  # 1-5
+    points = models.IntegerField(null=True, blank=True)
+    last_assessed = models.DateTimeField(null=True, blank=True)
 
 
-# class Notification(models.Model):
-#     # Enum equivalent using choices
-#     NOTIFICATION_TYPES = (
-#         ('ALERT', 'Alert'),
-#         ('ACHIEVEMENT', 'Achievement'),
-#         ('APPLICATION', 'Application'),
-#         ('MESSAGE', 'Message'),
-#         ('RECOMMENDATION', 'Recommendation'),
-#     )
+class Notification(models.Model):
+    # Enum equivalent using choices
+    NOTIFICATION_TYPES = (
+        ('ALERT', 'Alert'),
+        ('ACHIEVEMENT', 'Achievement'),
+        ('APPLICATION', 'Application'),
+        ('MESSAGE', 'Message'),
+        ('RECOMMENDATION', 'Recommendation'),
+    )
 
-#     # Fields
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     # Assuming user_id is a string reference
-#     user_id = models.CharField(max_length=255, null=False, blank=False)
-#     title = models.CharField(max_length=255, null=False, blank=False)
-#     message = models.TextField(null=False, blank=False)
-#     type = models.CharField(
-#         max_length=20, choices=NOTIFICATION_TYPES, default='ALERT')
-#     read = models.BooleanField(default=False)
-#     created_at = models.DateTimeField(default=timezone.now)
-#     action_link = models.URLField(null=True, blank=True)  # Nullable field
-#     related_id = models.CharField(
-#         max_length=255, null=True, blank=True)  # Nullable field
+    # Fields
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='notifications')
+    # Assuming user_id is a string reference
+    title = models.CharField(max_length=255, null=False, blank=False)
+    message = models.TextField(null=False, blank=False)
+    type = models.CharField(
+        max_length=20, choices=NOTIFICATION_TYPES, default='ALERT')
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    action_link = models.URLField(null=True, blank=True)  # Nullable field
 
 
-# class Internship(models.Model):
-#     # Enum equivalent using choices
-#     STATUS_CHOICES = (
-#         ('DRAFT', 'Draft'),
-#         ('ACTIVE', 'Active'),
-#         ('FILLED', 'Filled'),
-#         ('CLOSED', 'Closed'),
-#     )
+class Internship(models.Model):
+    # Enum equivalent using choices
+    STATUS_CHOICES = (
+        ('DRAFT', 'Draft'),
+        ('ACTIVE', 'Active'),
+        ('FILLED', 'Filled'),
+        ('CLOSED', 'Closed'),
+    )
 
-#     # Fields
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     # Assuming string reference to Business
-#     business_id = models.CharField(max_length=255, null=True, blank=True)
-#     title = models.CharField(max_length=255)
-#     description = models.TextField()
-#     location = models.CharField(max_length=255)
-#     is_remote = models.BooleanField(default=False)
-#     start_date = models.DateField()
-#     end_date = models.DateField()
-#     application_deadline = models.DateField()
-#     skill_level_required = models.IntegerField(
-#         null=True, blank=True)  # 1-5, nullable
-#     status = models.CharField(
-#         max_length=20, choices=STATUS_CHOICES, default='DRAFT')
-#     # Optional, using FloatField for Double
-#     stipend = models.FloatField(null=True, blank=True)
-#     hours_per_week = models.IntegerField(null=True, blank=True)
-#     application_process = models.TextField(null=True, blank=True)
-#     applicants = models.ManyToManyField(
-#         'students.Student', related_name='internships', blank=True)
+    # Fields
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='internship')
+    # Assuming string reference to Business
+    business = models.ForeignKey(
+        Business, related_name='business_internship', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    location = models.CharField(max_length=255)
+    is_remote = models.BooleanField(default=False)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    application_deadline = models.DateField()
+    skill_level_required = models.IntegerField(
+        null=True, blank=True)  # 1-5, nullable
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default='DRAFT')
+    # Optional, using FloatField for Double
+    stipend = models.FloatField(null=True, blank=True)
+    hours_per_week = models.IntegerField(null=True, blank=True)
+    application_process = models.TextField(null=True, blank=True)
+    applicants = models.ManyToManyField(
+        Student, related_name='student_internships', blank=True)
 
 
 # class CareerPath(models.Model):

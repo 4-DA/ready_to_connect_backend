@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls import path, include, re_path
 from rest_framework import routers
-from .views import MentorListCreateView, MentorRetrieveUpdateDestroyView, StudentListCreateView, StudentRetrieveUpdateDestroyView, GuardianListCreateView, GuardianRetrieveUpdateDestroyView, BusinessListCreateView, BusinessRetrieveUpdateDestroyView
+from .views import MentorListCreateView, MentorRetrieveUpdateDestroyView, StudentListCreateView, StudentRetrieveUpdateDestroyView, GuardianListCreateView, GuardianRetrieveUpdateDestroyView, BusinessListCreateView, BusinessRetrieveUpdateDestroyView, SkillListCreateView, SkillRetrieveUpdateDestroyView, NotificationListCreateView, NotificationRetrieveUpdateDestroyView, InternshipListCreateView, InternshipRetrieveUpdateDestroyView
 
 
 router = routers.DefaultRouter()
@@ -25,6 +25,24 @@ urlpatterns = [
          name='business-list-create'),
     path('businesses/<int:pk>/',
          BusinessRetrieveUpdateDestroyView.as_view(), name='business-detail'),
+
+    path('skill/', SkillListCreateView.as_view(),
+         name='skill-list-create'),
+    path('skill/<int:pk>/',
+         SkillRetrieveUpdateDestroyView.as_view(), name='skill-detail'),
+
+
+    path('skill/', NotificationListCreateView.as_view(),
+         name='notification-list-create'),
+    path('skill/<int:pk>/',
+         NotificationRetrieveUpdateDestroyView.as_view(), name='notification-detail'),
+
+    path('internship/', InternshipListCreateView.as_view(),
+         name='internship-list-create'),
+    path('internship/<int:pk>/',
+         InternshipRetrieveUpdateDestroyView.as_view(), name='internship-detail'),
+
+
 
 
 ]
