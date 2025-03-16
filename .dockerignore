@@ -5,10 +5,6 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Ignore environment variables and secret files
-.env
-**/.env
-
 # Ignore virtual environments
 venv/
 env/
