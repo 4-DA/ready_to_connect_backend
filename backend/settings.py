@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # Custom Apps
     'apps.accounts',
+    'apps.profile_management',
 
     # Third-Party Packages
     'corsheaders',

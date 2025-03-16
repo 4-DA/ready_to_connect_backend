@@ -19,6 +19,7 @@ class CustomUser(AbstractUser):
     location = models.CharField(max_length=200, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
+    streak = models.IntegerField(default=0)
     profile_picture = models.ImageField(
         null=True, blank=True, upload_to="profile_pictures/",)
     user_type = models.CharField(max_length=10, null=True, blank=True)

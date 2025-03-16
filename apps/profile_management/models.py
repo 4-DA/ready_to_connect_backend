@@ -4,20 +4,8 @@ from django.contrib.postgres.fields import ArrayField
 import uuid
 
 
-# class User(models.Model):
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     email = models.EmailField(unique=True)
-#     password = models.CharField(max_length=128)  # Hashed password
-#     full_name = models.CharField(max_length=255)
-#     date_of_birth = models.DateField()
-#     location = models.CharField(max_length=255, blank=True, null=True)
-#     profile_picture = models.URLField(blank=True, null=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-
 class Student(models.Model):
-    user_id = models.CharField(max_length=36, unique=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     skill_level = models.IntegerField(null=True, blank=True, choices=[
                                       (i, str(i)) for i in range(1, 6)])  # 1-5
     total_points = models.IntegerField(default=0)
@@ -25,20 +13,22 @@ class Student(models.Model):
     interests = models.TextField(
         blank=True, help_text="Comma-separated list of interests")
     education_level = models.CharField(max_length=100, blank=True, null=True)
-    guardian_id = models.CharField(
-        max_length=36, blank=True, null=True)  # Reference to another User
     # Reference to another User
-    mentor_id = models.CharField(max_length=36, blank=True, null=True)
+    guardian = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='guardian', null=True, blank=True)
+    # Reference to another User
+    mentor = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='mentor', null=True, blank=True)
 
 
 class Guardian(models.Model):
     # Primary key referencing a User (assumed as a string ID)
     # Adjust length as needed
-    user_id = models.CharField(max_length=255, primary_key=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     # List of student IDs stored as JSON
     # Stores a list of strings
-    students = models.JSONField(default=list, blank=True)
+    students = models.ManyToManyField(CustomUser, on_delete=models.CASCADE)
 
     # Notification preferences as individual fields
     notification_email = models.BooleanField(default=False)
@@ -51,7 +41,7 @@ class Guardian(models.Model):
 
 
 class Mentor(models.Model):
-    id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     avatar_url = models.ImageField(
@@ -64,8 +54,7 @@ class Mentor(models.Model):
 
 class Business(models.Model):
     # Link to User model
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     # Fields from Business entity
     company_name = models.CharField(max_length=255)

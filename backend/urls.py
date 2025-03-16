@@ -10,7 +10,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('apps.accounts.urls')),
-    # path('api/profile/', include('apps.profile_management.urls'))
+    path('api/profile/', include('apps.profile_management.urls'))
 ]
 
 if settings.DEBUG:
