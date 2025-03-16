@@ -14,28 +14,26 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-ENV = os.getenv('DJANGO_ENV').lower()
-
+# Environment Configuration
+ENV = os.getenv('DJANGO_ENV', 'dev').lower()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Security Settings
 SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = ENV == 'dev'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if ENV == 'dev' else False
+# Hosts and CORS Configuration
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '159.89.44.197',
+]
 
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
+# Installed Applications
 INSTALLED_APPS = [
+    # Django Default Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    # Custom apps
+
+    # Custom Apps
     'apps.accounts',
-    # 'apps.profile_management',
-    # Installed Packages
+
+    # Third-Party Packages
     'corsheaders',
     'drf_redesign',
     'rest_framework',
@@ -56,37 +55,73 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount'
-
 ]
 
+# Middleware Configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS middleware placed early
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # Downloaded Middleware
     'allauth.account.middleware.AccountMiddleware'
 ]
 
-ROOT_URLCONF = 'backend.urls'
+# CORS Configuration
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://159.89.44.197:8000',
+    # Add your frontend URLs here
+]
 
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# CSRF Configuration
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://159.89.44.197:8000',
+]
+
+# URLs and Template Configuration
+ROOT_URLCONF = 'backend.urls'
+WSGI_APPLICATION = 'backend.wsgi.application'
+
+# Static and Media Files
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+# Templates Configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates')
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,12 +134,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# Database Configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -112,88 +142,32 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': 5432, }
+        'PORT': 5432,
+    }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# Password Validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+# Default Primary Key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS_ALLOWED_ORIGINS = [
-#     'https://frontend.example.com',
-#     'http://localhost:3000',  # If you are testing locally with React, for example
-# ]
-
-# CORS_ALLOWED_ORIGINS = [
-#     '*'  # If you are testing locally with React, for example
-# ]
-
-
-CORS_ALLOW_ALL_ORIGINS = True
-
-# CORS_ORIGIN_WHITELIST = (
-#     "http://localhost:3000",
-#     "http://localhost:8000",
-#     "159.89.44.197",
-#     # "ready_to_connect.panemtech.com",
-#     # "ready_to_connect.panemtech.com"
-# )
-
-# ALLOWED_HOSTS = [
-#     # "http://localhost:3000",
-#     # "http://localhost:8000",
-#     "159.89.44.197",
-#     'localhost',
-#     "ready_to_connect.panemtech.com",
-#     # "ready_to_connect.panemtech.com"
-# ]
-
-ALLOWED_HOSTS = ['*']
-
-# CSRF_TRUSTED_ORIGINS = ["*"]
-
+# Authentication Configuration
 AUTH_USER_MODEL = 'accounts.CustomUser'
 ACCOUNT_ADAPTER = 'apps.accounts.adapter.CustomAccountAdapter'
 
-
+# Rest Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -205,10 +179,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+# Site ID
 SITE_ID = 1
 
+# Rest Auth Configuration
 REST_AUTH = {
-    # 'LOGIN_SERIALIZER': 'dj_rest_auth.serializers.LoginSerializer',
     'LOGIN_SERIALIZER': 'apps.accounts.serializers.CustomUserLoginSerializer',
     'TOKEN_SERIALIZER': 'dj_rest_auth.serializers.TokenSerializer',
     'JWT_SERIALIZER': 'dj_rest_auth.serializers.JWTSerializer',
@@ -237,6 +212,7 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,
 }
 
+# Simple JWT Configuration
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -264,6 +240,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+# Allauth Account Configuration
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -272,20 +249,13 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
-# EMAIL_CONFIRM_REDIRECT_BASE_URL = os.getenv('EMAIL_CONFIRM_REDIRECT_BASE_URL')
-# PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = os.getenv(
-#     'PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL')
-
-# Following is added to enable registration with email instead of username
-AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-
-    # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
-)
+]
 
-
+# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = os.getenv('EMAIL_HOST')
@@ -294,23 +264,19 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-
-# use as part of the link for the email verification link
 BASE_ACCOUNTS_URL = os.getenv('BASE_ACCOUNTS_URL')
-
 FORGET_PASSWORD_LINK = os.getenv('FORGET_PASSWORD_LINK')
 
+# Account Email Verification
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LOGIN_REDIRECT_URL = os.getenv('LOGIN_REDIRECT_URL')
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = int(os.getenv(
-    'ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS'))
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = int(
+    os.getenv('ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS', 3))
 ACCOUNT_EMAIL_NOTIFICATIONS = os.getenv('ACCOUNT_EMAIL_NOTIFICATIONS')
 ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = os.getenv(
     'ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED')
-ACCOUNT_EMAIL_VERIFICATION_BY_CODE_MAX_ATTEMPTS = int(os.getenv(
-    'ACCOUNT_EMAIL_VERIFICATION_BY_CODE_MAX_ATTEMPTS'))
-ACCOUNT_EMAIL_VERIFICATION_BY_CODE_TIMEOUT = int(os.getenv(
-    'ACCOUNT_EMAIL_VERIFICATION_BY_CODE_TIMEOUT'))
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_MAX_ATTEMPTS = int(
+    os.getenv('ACCOUNT_EMAIL_VERIFICATION_BY_CODE_MAX_ATTEMPTS', 3))
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_TIMEOUT = int(
+    os.getenv('ACCOUNT_EMAIL_VERIFICATION_BY_CODE_TIMEOUT', 600))
 ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = os.getenv('ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS')
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = int(os.getenv(
-    'ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS'))
