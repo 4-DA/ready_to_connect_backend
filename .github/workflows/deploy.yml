@@ -40,7 +40,7 @@ jobs:
       # Step 6: Save Docker images as tarballs
       - name: Save Docker images as tarballs
         run: |
-          docker save ready_to_connect-backend:latest | bzip2 > backend.tar.bz2
+          docker save ready_to_connect_backend-backend:latest | bzip2 > backend.tar.bz2
           docker save postgres:17 | bzip2 > postgres.tar.bz2
           ls -al  # Verify tarballs are created
 
