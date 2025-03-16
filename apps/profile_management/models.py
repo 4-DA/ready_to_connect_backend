@@ -317,3 +317,45 @@ class Guardian(models.Model):
 
     # List of approved company IDs stored as JSON
     approved_companies = models.JSONField(default=list, blank=True)  # Stores a list of strings
+
+#Job model 1
+class Job(models.Model):
+    EMPLOYMENT_TYPE_CHOICES = [
+        ('Permanent full-time', 'Permanent full-time'),
+        ('Not disclosed', 'Not disclosed'),
+        # Add more types as needed based on data variations
+    ]
+
+    # Basic job info
+    title = models.CharField(max_length=255)
+    url = models.URLField(max_length=500)
+    job_id = models.CharField(max_length=20, unique=True)  # Unique to avoid duplicates
+    company = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    salary = models.CharField(max_length=100, default="Not disclosed")
+    date_posted = models.CharField(max_length=50)  # e.g., "Updated 15/03/2025"
+
+    # Snippet
+    description_snippet = models.TextField()
+
+    # Full details
+    full_title = models.CharField(max_length=255)
+    full_company = models.CharField(max_length=255)
+    full_location = models.CharField(max_length=255)
+    full_salary = models.CharField(max_length=100, default="Not disclosed")
+    full_employment_type = models.CharField(
+        max_length=50,
+        choices=EMPLOYMENT_TYPE_CHOICES,
+        default="Not disclosed"
+    )
+    full_updated = models.CharField(max_length=50)  # e.g., "HR", "Updated 15/03/2025"
+    full_description_text = models.TextField()
+
+    # Additional metadata
+    job_reference = models.CharField(max_length=100)
+    apply_url = models.URLField(max_length=500)
+
+    # Optional fields (not present in all entries)
+    responsibilities = models.TextField(null=True, blank=True)
+    requirements = models.TextField(null=True, blank=True)
+
