@@ -39,27 +39,27 @@ services:
     networks:
       - custom_network
 
-  nginx:
-    #image: nginx:alpine
-    image: nginx:1-alpine
-    container_name: nginx
-    restart: always
-    ports:
-      - "443:443"  # Expose HTTPS port
-      - "80:80"    # Expose HTTP port for redirection
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount the Nginx configuration
-      - ./nginx.crt:/etc/nginx/ssl/nginx.crt  # Mount the SSL certificate
-      - ./nginx.key:/etc/nginx/ssl/nginx.key  # Mount the SSL private key
-    depends_on:
-      - backend  # Ensure Nginx starts after the Django app
-    networks:
-      - custom_network
+  # nginx:
+  #   #image: nginx:alpine
+  #   image: nginx:1-alpine
+  #   container_name: nginx
+  #   restart: always
+  #   ports:
+  #     - "443:443"  # Expose HTTPS port
+  #     - "80:80"    # Expose HTTP port for redirection
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf  # Mount the Nginx configuration
+  #     - ./nginx.crt:/etc/nginx/ssl/nginx.crt  # Mount the SSL certificate
+  #     - ./nginx.key:/etc/nginx/ssl/nginx.key  # Mount the SSL private key
+  #   depends_on:
+  #     - backend  # Ensure Nginx starts after the Django app
+  #   networks:
+  #     - custom_network
 
 volumes:
   postgres_data:
   media_volume:
 
-networks:
-  custom_network:
-    driver: bridge
+# networks:
+#   custom_network:
+#     driver: bridge
