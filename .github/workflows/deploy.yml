@@ -31,7 +31,7 @@ jobs:
         run: |
           docker compose up -d --build  # Build and start the containers
           docker ps -a 
-          docker run --rm -it ready_to_connect_backend-backend:latest bash
+          docker run --rm -i ready_to_connect_backend-backend:latest bash
           ls -al /code
           cat /code/manage.py  # Verify if manage.py exists
 
