@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '159.89.44.197',
+    'readytoconnect.panemtech.com'
 ]
 
 # Installed Applications
