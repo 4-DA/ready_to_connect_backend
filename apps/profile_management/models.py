@@ -5,7 +5,8 @@ import uuid
 
 
 class Student(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        CustomUser, related_name='student', on_delete=models.CASCADE)
     skill_level = models.IntegerField(null=True, blank=True, choices=[
                                       (i, str(i)) for i in range(1, 6)])  # 1-5
     total_points = models.IntegerField(default=0)
@@ -15,20 +16,22 @@ class Student(models.Model):
     education_level = models.CharField(max_length=100, blank=True, null=True)
     # Reference to another User
     guardian = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name='guardian', null=True, blank=True)
+        CustomUser, on_delete=models.CASCADE, related_name='student_guardian', null=True, blank=True)
     # Reference to another User
     mentor = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name='mentor', null=True, blank=True)
+        CustomUser, on_delete=models.CASCADE, related_name='student_mentor', null=True, blank=True)
 
 
 class Guardian(models.Model):
     # Primary key referencing a User (assumed as a string ID)
     # Adjust length as needed
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='guardian')
 
     # List of student IDs stored as JSON
     # Stores a list of strings
-    students = models.ManyToManyField(CustomUser, on_delete=models.CASCADE)
+    students = models.ManyToManyField(
+        CustomUser, related_name='guardian_students')
 
     # Notification preferences as individual fields
     notification_email = models.BooleanField(default=False)
@@ -41,7 +44,8 @@ class Guardian(models.Model):
 
 
 class Mentor(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='mentor')
     name = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     avatar_url = models.ImageField(
@@ -54,7 +58,8 @@ class Mentor(models.Model):
 
 class Business(models.Model):
     # Link to User model
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='business')
 
     # Fields from Business entity
     company_name = models.CharField(max_length=255)

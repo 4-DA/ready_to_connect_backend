@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from models import Mentor, Student, Guardian, Business
-from accounts.serializers import CustomUserReadSerializer
+from .models import Mentor, Student, Guardian, Business
+from apps.accounts.serializers import CustomUserReadSerializer
 
 
 class MentorSerializer(serializers.ModelSerializer):

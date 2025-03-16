@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 
 
 from apps.accounts.serializers import CustomUserReadSerializer
-from models import Mentor, Student, Guardian, Business
-from serializers import MentorSerializer, StudentSerializer, GuardianSerializer, BusinessSerializer
+from .models import Mentor, Student, Guardian, Business
+from .serializers import MentorSerializer, StudentSerializer, GuardianSerializer, BusinessSerializer
 
 
 class MentorListCreateView(generics.ListCreateAPIView):
