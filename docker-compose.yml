@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/code
+      # - .:/code
       - media_volume:/code/media 
     depends_on:
       db:

@@ -159,10 +159,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:3000",
-    "http://localhost:8000",
-)
+# CORS_ORIGIN_WHITELIST = (
+#     "http://localhost:3000",
+#     "http://localhost:8000",
+#     "159.89.44.197",
+#     # "ready_to_connect.panemtech.com",
+#     # "ready_to_connect.panemtech.com"
+# )
+
+ALLOWED_HOSTS = [
+    # "http://localhost:3000",
+    # "http://localhost:8000",
+    "159.89.44.197",
+    'localhost',
+    "ready_to_connect.panemtech.com",
+    # "ready_to_connect.panemtech.com"
+]
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 
