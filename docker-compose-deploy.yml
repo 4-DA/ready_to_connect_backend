@@ -1,6 +1,6 @@
 services:
   backend:
-    image: ready_to_connect_backend-backend
+    image: ready_to_connect-backend:latest
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
