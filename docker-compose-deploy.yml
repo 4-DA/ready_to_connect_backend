@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      image: ready_to_connect_backend-backend
-      dockerfile: docker/Dockerfile
+    image: ready_to_connect_backend-backend
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
