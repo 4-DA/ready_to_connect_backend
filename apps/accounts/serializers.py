@@ -12,10 +12,10 @@ class CustomUserRegistrationSerializer(RegisterSerializer, serializers.ModelSeri
     USER_TYPES = ["Student", "Guardian", "Business", "Mentor"]
 
     full_name = serializers.CharField(required=True)
-    date_of_birth = serializers.DateField(required=True)
+    date_of_birth = serializers.DateField(required=False)
     user_type = serializers.ChoiceField(choices=USER_TYPES, required=True)
-    location = serializers.CharField(required=True)
-    profile_picture = serializers.ImageField(required=True)
+    location = serializers.CharField(required=False)
+    profile_picture = serializers.ImageField(required=False)
     streak = serializers.IntegerField(required=False, default=0)
     level = serializers.IntegerField(required=False, default=0)
     xp = serializers.IntegerField(required=False, default=0)

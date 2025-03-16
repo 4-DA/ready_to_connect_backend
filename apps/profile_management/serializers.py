@@ -74,7 +74,7 @@ class InternshipSerializer(serializers.ModelSerializer):
     # Serialize the related CustomUser (user)
     user = CustomUserReadSerializer()
     business = BusinessSerializer()
-    applicants = CustomUserReadSerializer()
+    # applicants = CustomUserReadSerializer()
 
     class Meta:
         model = Internship
