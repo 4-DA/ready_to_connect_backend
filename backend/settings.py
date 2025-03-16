@@ -30,7 +30,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '159.89.44.197',
     'readytoconnect.panemtech.com',
-    'ready-to-connect-frontend.vercel.app'
+    'ready-to-connect-frontend.vercel.app',
+    'readytoconnect.vercel.app'
 ]
 
 # Installed Applications
@@ -80,7 +81,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://159.89.44.197:8000',
     'https://readytoconnect.panemtech.com',
-    'https://ready-to-connect-frontend.vercel.app'
+    'https://ready-to-connect-frontend.vercel.app',
+    'https://readytoconnect.vercel.app'
     # Add your frontend URLs here
 ]
 
@@ -111,7 +113,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://159.89.44.197:8000',
     'https://readytoconnect.panemtech.com',
-    'https://ready-to-connect-frontend.vercel.app'
+    'https://ready-to-connect-frontend.vercel.app',
+    'https://readytoconnect.vercel.app'
 ]
 
 # URLs and Template Configuration
