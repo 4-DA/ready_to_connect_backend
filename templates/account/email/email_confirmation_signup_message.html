@@ -1,0 +1,237 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="color-scheme: light;">
+
+<head>
+    <meta name="viewport" content="width-device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Light Mode meta tags needed to prevent Dark Mode in email client user agents-->
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+</head>
+
+<body
+    style="box-sizing: border-box; position: relative; font-family: Arial, sans-serif ; -webkit-text-size-adjust: none; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        body,
+        body *:not(html):not(style):not(br):not(tr):not(code) {
+            font-family: Arial, sans-serif;
+
+        }
+
+        .body {
+            background-color: #f7f7f7;
+            color: #444444;
+        }
+
+        .wrapper {
+            background-color: #f7f7f7;
+        }
+
+        .inner-body {
+            background-color: #ffffff;
+            color: #4d4d4d;
+            border-color: #444444;
+        }
+
+        .subcopy {
+            border-top-color: #4d4d4d21;
+            color: #4d4d4d8b;
+        }
+
+        .footer p {
+            color: #4444448b;
+        }
+
+        .table td {
+            color: #2d3f52;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .inner-body {
+                width: 100% !important;
+            }
+
+            .footer {
+                width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .button {
+                width: 100% !important;
+            }
+        }
+    </style>
+
+    <div style="box-sizing: border-box; font-size: 1px; height: 20px;">
+    </div>
+
+    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
+        style="font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0;">
+        <tr>
+            <td style="text-align: center;">
+                <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                    style="margin: 0 auto; padding: 0; width: 100%;">
+                    <!-- Email Body -->
+
+                    <tr>
+                        <td class="body" width="100%"
+                            style="box-sizing: border-box; font-family: Arial, sans-serif; background-color: #f7f7f7; color: #444444; margin: 0; padding: 0; width: 100%;">
+                            <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0"
+                                role="presentation"
+                                style="box-sizing: border-box; background-color: #ffffff; color: #4d4d4d; border-radius: 2px; border: 1px solid #444444; box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015); margin: 0 auto; padding: 0; width: 570px;">
+                                <tr>
+                                    <td class="header" align="center"
+                                        style="box-sizing: border-box; font-family: Arial, sans-serif; text-align: center;">
+                                        <div class="header-inner-wrapper"
+                                            style="max-width: 100px; margin: auto; padding: 15px; background-color: #ffffff;">
+                                            <img alt="logo" class="logo"
+                                                src="https://static.vecteezy.com/system/resources/previews/022/951/431/original/chain-icon-connection-link-icon-png.png"
+                                                style="width: 100%; max-width: 570px; height: auto; object-fit: cover; background-color: #ffffff;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-cell"
+                                        style="box-sizing: border-box; font-family: Arial, sans-serif; max-width: 100%; padding: 15px;">
+                                        <h1
+                                            style="font-size: 18px; font-weight: bold; margin-top: 0; text-align: center;">
+                                            Confirm Your Email Address</h1>
+                                        <p style=" font-weight: bold; margin-top: 0; text-align: left;">
+                                            Hello {{ user.first_name }},</p>
+                                        <p
+                                            style="font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
+                                            Thank you for signing up. Please click the link below to confirm your email
+                                            address:
+                                        </p>
+                                        <table class="action" align="center" width="100%" cellpadding="0"
+                                            cellspacing="0" role="presentation"
+                                            style="margin: 10px auto; text-align: center; width: 100%;">
+                                            <tr>
+                                                <td align="center">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation">
+                                                        <tr>
+                                                            <td>
+                                                                <a href={{ activate_url }} class="button"
+                                                                    style="border-radius: 4px; text-decoration: none; color: #ffffff; background-color: #3097d1; padding: 10px 18px;"
+                                                                    target="_blank" rel="noopener">Confirm Your
+                                                                    Account</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <p
+                                            style="font-size: 16px; line-height: 1.5em; padding-top: 12px; text-align: left;">
+                                            If you did not request this, please ignore this email.
+                                        </p>
+                                        <p
+                                            style="font-size: 16px; line-height: 1.5em; margin-top: 0; margin-bottom: 0;text-align: left;">
+                                            Best regards,</p>
+                                        <p
+                                            style="font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
+                                            <strong>The Ready to Connect Team</strong>
+                                        </p>
+                                        <table class="subcopy" width="100%" cellpadding="0" cellspacing="0"
+                                            role="presentation"
+                                            style="border-top: 1px solid #4d4d4d21; margin-top: 25px; padding-top: 25px;">
+                                            <tr>
+                                                <td style="font-family: Arial, sans-serif; text-align: center;">
+                                                    <p
+                                                        style="font-size: 14px; line-height: 1.5em; margin-top: 0; text-align: center;">
+                                                        This email was sent to you by Ready to connect. You can opt out
+                                                        or adjust your communication preferences at any time by clicking
+                                                        <a href="https://www.google.com"
+                                                            style="color: #3869d4;">here</a>. You may review our
+                                                        <a href="https://www.google.com" style="color: #3869d4;">Privacy
+                                                            Policy</a> at any
+                                                        time.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table class="action" width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                                style="margin: 10px auto; text-align: center;">
+                                <tr>
+                                    <td>
+                                        <table width="100%" border="0" cellpadding="0" cellspacing="0"
+                                            role="presentation">
+                                            <tr>
+                                                <td style="text-align: center;">
+                                                    <table style="display: inline-table;">
+                                                        <tr>
+                                                            <!-- Facebook -->
+                                                            <td style="padding: 4px;">
+                                                                <a href="https://www.facebook.com" target="_blank">
+                                                                    <img src="https://static-00.iconduck.com/assets.00/facebook-icon-1024x1024-hym6l11f.png"
+                                                                        alt="Facebook" height="40" width="40"
+                                                                        style="max-width: 100%; object-fit: cover; border: none;">
+                                                                </a>
+                                                            </td>
+                                                            <!-- Instagram -->
+                                                            <td style="padding: 4px;">
+                                                                <a href="https://instagram.com" target="_blank">
+                                                                    <img src="https://s3.amazonaws.com/freebiesupply/large/2x/instagram-icon-white-on-black.png"
+                                                                        alt="Instagram" height="40" width="40"
+                                                                        style="max-width: 100%; object-fit: cover; border: none;">
+                                                                </a>
+                                                            </td>
+                                                            <!-- Twitter -->
+                                                            <td style="padding: 4px;">
+                                                                <a href="https://twitter.com" target="_blank">
+                                                                    <img src="https://static.vecteezy.com/system/resources/thumbnails/027/395/710/small_2x/twitter-brand-new-logo-3-d-with-new-x-shaped-graphic-of-the-world-s-most-popular-social-media-free-png.png"
+                                                                        alt="Twitter" height="40" width="40"
+                                                                        style="max-width: 100%; object-fit: cover; border: none;">
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td>
+                            <table class="footer" width="570" cellpadding="0" cellspacing="0" role="presentation"
+                                style="margin: 0 auto; text-align: center; width: 570px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <p
+                                            style="line-height: 1.5; margin-top: 0; color: #4444448b; font-size: 12px; text-align: center;">
+                                            Copyright Ready to Connect.
+                                            <a href="https://www.google.com"
+                                                style="color: #3869d4; text-decoration: underline;">Terms of
+                                                Use</a>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

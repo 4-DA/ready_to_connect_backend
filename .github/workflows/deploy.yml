@@ -1,87 +1,73 @@
-name: Deploy Spring Boot Application with Docker and PostgreSQL to DigitalOcean
+name: Deploy Django Application with Docker and PostgreSQL to DigitalOcean
 
 on:
   push:
     branches:
-      - main # Trigger deployment on push to the main branch change
+      - main  # Trigger deployment on push to the main branch
 
 jobs:
   build_and_deploy:
-    runs-on: ubuntu-latest # Use a Linux runner
+    runs-on: ubuntu-latest  # Use a Linux runner
 
     steps:
       # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up JDK and build the Spring Boot JAR file
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          distribution: "temurin"
-          java-version: "21"
+          python-version: "3.13"
 
-      - name: Build the Spring Boot JAR
+      # Step 3: Install dependencies
+      - name: Install dependencies
         run: |
-          cd ready_to_connect  # Navigate to your project folder
-          ./mvnw clean install -DskipTests  # Assumes you're using Maven.
+          pip install --upgrade pip
+          pip install -r docker/requirements.txt
 
-      # Step 3: Build the Docker images
-      - name: Build Docker images
+      # Step 4: Build and start Docker containers
+      - name: Build Docker images and start containers
         run: |
-          # cd ready_to_connect  # Navigate to your project folder
-          # Build the Spring Boot Docker image
-          # docker build -t spring-app:latest .
+          docker compose up -d --build  # Build and start the containers
 
-          # Build the PostgreSQL Docker image (if needed, otherwise use the default image)
-          # docker build -t postgres-db:latest -f Dockerfile.postgres .
-
-          cd ready_to_connect  # Navigate to your project folder
-          docker compose up -d --build  # Build and start the containers in detached mode
-
-      # Step 4: Set up SSH to connect to your DigitalOcean Droplet
+      # Step 5: Set up SSH to connect to DigitalOcean Droplet
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }} # Store your SSH private key in GitHub Secrets
+          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }}
 
-      # Step 5: Save Docker images as tarballs
+      # Step 6: Save Docker images as tarballs
       - name: Save Docker images as tarballs
         run: |
-          docker save ready_to_connect-app:latest | bzip2 > ready_to_connect-app.tar.bz2
+          docker save ready_to_connect-backend:latest | bzip2 > backend.tar.bz2
           docker save postgres:17 | bzip2 > postgres.tar.bz2
           ls -al  # Verify tarballs are created
 
-      # Step 6: Transfer Docker images to DigitalOcean Droplet
+      # Step 7: Transfer Docker images to DigitalOcean Droplet
       - name: Transfer Docker images to DigitalOcean Droplet
         run: |
-          scp -o StrictHostKeyChecking=no ready_to_connect-app.tar.bz2 root@159.89.44.197:/root/tmp/
+          scp -o StrictHostKeyChecking=no backend.tar.bz2 root@159.89.44.197:/root/tmp/
           scp -o StrictHostKeyChecking=no postgres.tar.bz2 root@159.89.44.197:/root/tmp/
           cd ready_to_connect
-          ls -al
           scp -o StrictHostKeyChecking=no docker-compose-deploy.yml root@159.89.44.197:/root/tmp/
 
-      # Step 7: Load Docker images on DigitalOcean Droplet
+      # Step 8: Load Docker images on DigitalOcean Droplet
       - name: Load Docker images on DigitalOcean Droplet
         run: |
           ssh -o StrictHostKeyChecking=no root@159.89.44.197 << 'EOF'
-            # Ensure the target directory exists
-            
-            # Move images from /tmp to /code
-            mv /root/tmp/ready_to_connect-app.tar.bz2 /root/code/
+            mv /root/tmp/backend.tar.bz2 /root/code/
             mv /root/tmp/postgres.tar.bz2 /root/code/
             mv /root/tmp/docker-compose-deploy.yml /root/code/docker-compose.yml
-
-            # Load the Docker images
-            docker load < /root/code/ready_to_connect-app.tar.bz2
+            docker load < /root/code/backend.tar.bz2
             docker load < /root/code/postgres.tar.bz2
           EOF
 
-      # Step 8: Start Docker containers on DigitalOcean Droplet
+      # Step 9: Start Docker containers on DigitalOcean Droplet
       - name: Start Docker containers on DigitalOcean Droplet
         run: |
           ssh -o StrictHostKeyChecking=no root@159.89.44.197 << 'EOF'
-            cd /root/code  # Navigate to the correct directory if necessary
+            cd /root/code  # Navigate to the correct directory
             docker compose down  # Stop existing containers
             docker compose up -d  # Start containers in detached mode
           EOF

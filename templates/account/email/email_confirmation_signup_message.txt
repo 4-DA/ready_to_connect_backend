@@ -1,0 +1,12 @@
+Subject: Confirm Your Email Address
+
+Hello {{ user.first_name }},
+
+Thank you for signing up. Please click the link below to confirm your email address:
+
+{{ activate_url }}
+
+If you did not request this, please ignore this email.
+
+Thanks,
+The Fix Link Team

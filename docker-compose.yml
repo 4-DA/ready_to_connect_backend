@@ -1,0 +1,58 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+      - media_volume:/code/media 
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s    
+
+  db:
+    image: postgres:17
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   restart: always
+  #   ports:
+  #     - "443:443"  # Expose HTTPS port
+  #     - "80:80"    # Expose HTTP port for redirection
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf  # Mount the Nginx configuration
+  #     - ./nginx.crt:/etc/nginx/ssl/nginx.crt  # Mount the SSL certificate
+  #     - ./nginx.key:/etc/nginx/ssl/nginx.key  # Mount the SSL private key
+  #   depends_on:
+  #     - app  # Ensure Nginx starts after the Spring Boot app
+
+volumes:
+  postgres_data:
+  media_volume:
