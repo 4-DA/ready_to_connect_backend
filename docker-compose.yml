@@ -20,6 +20,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s    
+    networks:
+      - custom_network
 
   db:
     image: postgres:17
@@ -40,7 +42,8 @@ services:
       start_period: 10s
 
   nginx:
-    image: nginx:alpine
+    #image: nginx:alpine
+    image: nginx:1-alpine
     container_name: nginx
     restart: always
     ports:
@@ -52,7 +55,13 @@ services:
       - ./nginx.key:/etc/nginx/ssl/nginx.key  # Mount the SSL private key
     depends_on:
       - backend  # Ensure Nginx starts after the Django app
+    networks:
+      - custom_network
 
 volumes:
   postgres_data:
   media_volume:
+
+networks:
+  custom_network:
+    driver: bridge
