@@ -47,7 +47,7 @@ jobs:
       # Step 7: Transfer Docker images to DigitalOcean Droplet
       - name: Transfer Docker images to DigitalOcean Droplet
         run: |
-          scp -o StrictHostKeyChecking=no backend.tar.bz2 root@159.89.44.197:/root/tmp/
+          scp -o StrictHostKeyChecking=no ready_to_connect_backend-backend.tar.bz2 root@159.89.44.197:/root/tmp/
           scp -o StrictHostKeyChecking=no postgres.tar.bz2 root@159.89.44.197:/root/tmp/
           scp -o StrictHostKeyChecking=no docker-compose-deploy.yml root@159.89.44.197:/root/tmp/
 
