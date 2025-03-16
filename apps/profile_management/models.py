@@ -2,7 +2,6 @@ from datetime import timezone
 from django.db import models
 from apps.accounts.models import CustomUser
 from django.contrib.postgres.fields import ArrayField
-import uuid
 
 
 class Student(models.Model):

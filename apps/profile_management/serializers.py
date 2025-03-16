@@ -77,7 +77,7 @@ class InternshipSerializer(serializers.ModelSerializer):
     applicants = CustomUserReadSerializer()
 
     class Meta:
-        model = Notification
+        model = Internship
         fields = '__all__'  # Include all fields of the Skill model
         # The 'user' field should generally be read-only
         read_only_fields = ['user', 'business', 'applicants']
